@@ -45,6 +45,7 @@ rounds = 500000
 conversionDict1 = {}
 conversionDict2 = {}
 conversionDict3 = {}
+dictList = []
 allChar = ascii_letters + digits + punctuation
 allChar1 = list(allChar)
 for i in range(len(allChar1)):
@@ -65,7 +66,9 @@ for i in range(len(allChar3)):
 # idea here, create a list of the initialized dicts
 # then we can reference the index later, instead
 # of an if loop matching a number.
-dictList = [conversionDict1, conversionDict2, conversionDict3]
+dictList.append(conversionDict1)
+dictList.append(conversionDict2)
+dictList.append(conversionDict3)
 
 
 def generate_seed():
