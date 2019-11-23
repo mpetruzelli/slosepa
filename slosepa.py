@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 #
 # slosepa.py
 # SLOw hash SEcure Password Author
@@ -30,10 +30,12 @@
 #   2 - gui
 #   3 - browser plugin?
 
+import itertools
 from string import ascii_letters, digits, punctuation
 from secrets import choice as ch
 from secrets import randbelow as randb
 from hashlib import blake2b, sha3_512, sha512
+
 
 # future args
 pwLength = 30
@@ -60,40 +62,28 @@ for i in range(len(allChar3)):
     allChar3.remove(temp)
     conversionDict3[hex(i)] = temp
 
+# idea here, create a list of the initialized dicts
+# then we can reference the index later, instead
+# of an if loop matching a number.
+dictList = [conversionDict1, conversionDict2, conversionDict3]
+
+
+def generate_seed():
+    seed = ''
+    for _ in itertools.repeat(None, pwLength * randb(1337) + 1):
+        j = randb(3)
+        seed += ch(list(dictList[j].values()))
+    return seed
+
+
 # generate seeds to hashing functions
-seed1 = ''
-for i in range(pwLength * randb(1337) + 1):
-    j = randb(3)
-    if j == 0:
-        seed1 += ch(list(conversionDict1.values()))
-    elif j == 1:
-        seed1 += ch(list(conversionDict2.values()))
-    elif j == 2:
-        seed1 += ch(list(conversionDict3.values()))
-# uncomment to print
-#print("'seed1' = " + seed1)
-seed2 = ''
-for i in range(pwLength * randb(1337) + 1):
-    j = randb(3)
-    if j == 0:
-        seed2 += ch(list(conversionDict1.values()))
-    elif j == 1:
-        seed2 += ch(list(conversionDict2.values()))
-    elif j == 2:
-        seed2 += ch(list(conversionDict3.values()))
-# uncomment to print
-#print("\n'seed2' = " + seed2)
-seed3 = ''
-for i in range(pwLength * randb(1337) + 1):
-    j = randb(3)
-    if j == 0:
-        seed3 += ch(list(conversionDict1.values()))
-    elif j == 1:
-        seed3 += ch(list(conversionDict2.values()))
-    elif j == 2:
-        seed3 += ch(list(conversionDict3.values()))
-# uncomment to print
-#print("\n'seed3' = " + seed3)
+funcSeed1 = generate_seed()
+funcSeed2 = generate_seed()
+funcSeed3 = generate_seed()
+# print('function seed1 = {0}'.format(funcSeed1))
+# print('function seed2 = {0}'.format(funcSeed2))
+# print('function seed3 = {0}'.format(funcSeed3))
+
 
 blaked = blake2b()
 sha3d = sha3_512()
