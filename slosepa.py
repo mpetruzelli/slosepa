@@ -73,7 +73,7 @@ dictList.append(conversionDict3)
 def generate_seed():
     seed = ''
     for _ in itertools.repeat(None, pwLength * randb(1337) + 1):
-        j = randb(3)
+        j = randb(len(dictList))
         seed += ch(list(dictList[j].values()))
     return seed
 
@@ -91,9 +91,9 @@ blaked = blake2b()
 sha3d = sha3_512()
 sha2d = sha512()
 
-blaked.update(bytearray(seed1, 'utf-8'))
-sha3d.update(bytearray(seed2, 'utf-8'))
-sha2d.update(bytearray(seed3, 'utf-8'))
+blaked.update(bytearray(funcSeed1, 'utf-8'))
+sha3d.update(bytearray(funcSeed2, 'utf-8'))
+sha2d.update(bytearray(funcSeed3, 'utf-8'))
 
 for i in range(rounds):
     blaked.update(bytearray(blaked.hexdigest(), 'utf-8'))
