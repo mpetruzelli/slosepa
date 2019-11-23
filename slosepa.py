@@ -36,7 +36,6 @@ from secrets import choice as ch
 from secrets import randbelow as randb
 from hashlib import blake2b, sha3_512, sha512
 
-
 # future args
 pwLength = 30
 rounds = 500000
